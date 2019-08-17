@@ -7,6 +7,6 @@
   </node>
   
   <node pkg="pozyx_simulation" name="pozyx_simulation"  type="uwb_simulation.py" output="screen">
-        <param name="modelstate_index" value="3" />
+        <param name="modelstate_index" value="2" />
   </node>
 </launch>

@@ -29,9 +29,14 @@ Message has created 3 different arrays <br>
 3. time stamp => time[] stamp</br>
 
 </br>
-## Map and Rviz
-If the start manually in the rviz you can add tf components.You can change map and map configuration in maps folder.
 
+## Map and Rviz
+If the start manually in the rviz you can add tf components. You can change map and map configuration in maps folder. Start manually you can use this order.
+```
+rosrun map_server map_server map.yaml
+rosrun rviz rviz
+rosrun pozyx_simulation uwb_simulation.py
+```
 ## Noise 
 The uwb noise is added for each uwb sensor </br> 
 ```

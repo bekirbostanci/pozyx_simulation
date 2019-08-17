@@ -18,7 +18,7 @@ roslaunch pozyx_simulation uwb_simulation_initializing.launch
 ```
 
 ## Publish Topic
-Publisher topic name is "uwb_data_topic". You can check with this commend
+Publisher topic name is "uwb_data_topic". You can check with this command
 ```
 rostopic echo /uwb_data_topic
 ```

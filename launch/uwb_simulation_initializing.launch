@@ -1,0 +1,12 @@
+<launch>
+  <arg name="map_file" default="$(find pozyx_simulation)/maps/map.yaml"/>
+  <node pkg="map_server" name="map_server"  type="map_server" args="$(arg map_file)" />
+
+  <include file="$(find pozyx_simulation)/launch/uwb_anchors_set.launch" />
+  <node pkg="rviz" name="rviz" type="rviz"  args="-d $(find pozyx_simulation)/rviz/config_file.rviz">
+  </node>
+  
+  <node pkg="pozyx_simulation" name="pozyx_simulation"  type="uwb_simulation.py" output="screen">
+        <param name="modelstate_index" value="3" />
+  </node>
+</launch>

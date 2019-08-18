@@ -27,8 +27,8 @@ robot_pose_x =0
 robot_pose_y =0
 robot_pose_z =0
 
+global counter
 counter = 0 
-
 
 rospy.init_node('uwb_simulation', anonymous=True)
 #distances are publishing with uwb_data_topic
@@ -106,8 +106,10 @@ def publish_data(all_destination_id, all_distance):
 def subscribe_data(ModelStates):
     #for the get real position of robot subscribe model states topic  
     global robot_pose_x,robot_pose_y,robot_pose_z
+    global counter
     counter = counter +1 
-    if counter %100 ==  0: 
+    #gazebo/modelstate topic frequency is 100 hz. We descrese 10 hz with log method 
+    if counter %100 ==  0:  
         counter = 0 
         #ModelStates.pose[2] = turtlebot3 model real position on modelstates   
         robot_pose_x =ModelStates.pose[MODELSTATE_INDEX].position.x*1000

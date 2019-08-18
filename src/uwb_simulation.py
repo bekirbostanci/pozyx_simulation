@@ -48,11 +48,15 @@ def get_anchors_pos():
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             break
 
+    sensor_pos = np.dot(sensor_pos,1000)
+
+
     if sensor_pos == [] :
         rospy.logwarn("There is not found any anchors. Function is working again.")    
         get_anchors_pos()
     else: 
-        rospy.loginfo("UWB Anchor List:\n" + str(sensor_pos))    
+        rospy.loginfo("UWB Anchor List:\nWarning : uint is mm \n" + str(sensor_pos))    
+
 
     return sensor_pos
 
@@ -108,13 +112,16 @@ def subscribe_data(ModelStates):
     global robot_pose_x,robot_pose_y,robot_pose_z
     global counter
     counter = counter +1 
+
     #gazebo/modelstate topic frequency is 100 hz. We descrese 10 hz with log method 
     if counter %100 ==  0:  
         counter = 0 
+
         #ModelStates.pose[2] = turtlebot3 model real position on modelstates   
         robot_pose_x =ModelStates.pose[MODELSTATE_INDEX].position.x*1000
         robot_pose_y =ModelStates.pose[MODELSTATE_INDEX].position.y*1000
         robot_pose_z =ModelStates.pose[MODELSTATE_INDEX].position.z*1000
+        
 
 if __name__ == "__main__":
     #get uwb anchors postion
@@ -123,6 +130,7 @@ if __name__ == "__main__":
 
     MODELSTATE_INDEX = rospy.get_param('/pozyx_simulation/modelstate_index',2)
     rospy.loginfo("%s is %s", rospy.resolve_name('/pozyx_simulation/modelstate_index'), MODELSTATE_INDEX)
+
 
     time.sleep(0.5)
 

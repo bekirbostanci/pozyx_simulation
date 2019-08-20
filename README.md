@@ -7,6 +7,9 @@ This project can use with ros platform for simulating uwb sensors. In this proje
 In this file "launch/uwb_anchors_set.launch" contain uwb anchors. You can add and remove uwb anchors in this file.</br>
 *Note : uwb tag frame name should be like this uwb_anchor_0, uwb_anchor_1, uwb_anchor_2 ...*
 
+![](https://raw.githubusercontent.com/bekirbostanci/ros_pozyx_simulation/master/docs/2.png)
+
+
 ## UWB Tag Add 
 This project tag is simuating robot orginal position so that you have to instert "launch/uwb_simulation_initializing.launch" "modelstate_index" parameter (for turtlebot3 modelstate_index = 2). To find its own robot parameter in "gazebo/model_states" topics.
 

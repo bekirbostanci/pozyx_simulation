@@ -1,32 +1,32 @@
 # ROS Pozyx Simulation
-This project can use with ros platform for simulating uwb sensors. In this project's main aim is publishing simulating uwb anchors and tag distance and  visualizing uwb sensors position. This project tested with turtlebot3 simulation.  
+This package is to simulate the UWB range measurements in ROS environment. Generated data published to “uwb_data_topic” 
 
 ![](https://raw.githubusercontent.com/bekirbostanci/ros_pozyx_simulation/master/docs/1.png)
 
 ## UWB Anchors Add
-In this file "launch/uwb_anchors_set.launch" contain uwb anchors. You can add and remove uwb anchors in this file.</br>
-*Note : uwb tag frame name should be like this uwb_anchor_0, uwb_anchor_1, uwb_anchor_2 ...*
+The file that contains the UWB anchor information is in "launch/uwb_anchors_set.launch" file. It is possible to add or remove the UWB anchors as you like. </br>
+Note : uwb tag frame name should be as follows uwb_anchor_0, uwb_anchor_1, uwb_anchor_2 ...
 
 ![](https://raw.githubusercontent.com/bekirbostanci/ros_pozyx_simulation/master/docs/2.png)
 
 
-## UWB Tag Add 
-This project tag is simuating robot orginal position so that you have to instert "launch/uwb_simulation_initializing.launch" "modelstate_index" parameter (for turtlebot3 modelstate_index = 2). To find its own robot parameter in "gazebo/model_states" topics.
+## UWB Tag information
+Location of the tag has been taken from the robot position so to use this information "modelstate_index" parameter (for turtlebot3 modelstate_index =2) which is in "launch/uwb_simulation_initializing.launch" file must set correctly depending on the robot model used. It is possible to find your own robot parameter in "gazebo/model_states" topic.
 
 
 ## Initialize
-Start with default settings 
-```
+Use the command below in terminal to start it with default settings
+
 roslaunch pozyx_simulation uwb_simulation_initializing.launch
-```
+
 
 ## Publish Topic
-Publisher topic name is "uwb_data_topic". You can check with this command
-```
+Name of the publisher topic is "uwb_data_topic". You can check it by using the command below in terminal
+
 rostopic echo /uwb_data_topic
-```
+
 </br>
-Message has created 3 different arrays <br>
+Message type consists of 3 different arrays <br>
 1. anchors name => int64[] destination_id</br>
 2. anchors distance to robot => float64[] distance</br>
 3. time stamp => time[] stamp</br>
@@ -34,14 +34,13 @@ Message has created 3 different arrays <br>
 </br>
 
 ## Map and Rviz
-If the start manually in the rviz you can add tf components. You can change map and map configuration in maps folder. Start manually you can use this order.
-```
+If you want to start manually with custom maps. You can change map and map configuration in maps folder and start manually with the codes below.
+
 rosrun map_server map_server map.yaml
 rosrun rviz rviz
 rosrun pozyx_simulation uwb_simulation.py
-```
+
 ## Noise 
-The uwb noise is added for each uwb sensor </br> 
-```
-np.random.normal(0, uwb_dist*0.015,1)  
-```
+Noise has been added to the every UWB ranging data </br> 
+
+np.random.normal(0, uwb_dist*0.015,1)

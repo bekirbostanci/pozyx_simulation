@@ -46,16 +46,17 @@ Noise has been added to the every UWB ranging data </br>
 np.random.normal(0, uwb_dist*0.015,1)
 
 ## How to use 
-Firstly run gazebo simulation after than run rviz
-1. run rqt 
-2. in rqt window "Plugins" => "Topics" => "Topic Monitor" 
-3. in that window find /gazebo/model_states/ topic and checked that line 
-4. control robot pose in which parameter  for example ['ground_plane','robot_symbol','turtlebot_waffle'] in thise case index 2 
-5. go repo folder /launch/uwb_manually_initializing.launch file and change modelstate_index parameter 
- ```
-  <node pkg="pozyx_simulation" name="pozyx_simulation"  type="uwb_simulation.py" output="screen">
-        <param name="modelstate_index" value="2" />
+1.Add uwb tag code urdf file
 ```
+  <joint name="uwb_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="uwb_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="uwb_link"/>
+```
+
 For this process get robot or drone real position afther that to place uwb anchor in maps. 
 1. go repo folder /launch/uwb_anchors_set.launch and open 
 2. for each uwb anchor's set a name and position for example 
@@ -119,3 +120,21 @@ stamp:
 
 This simulation give only robot to anchors distance. For calculate robot position use ieuagv_localization repo
 https://github.com/bekirbostanci/ieuagv_localization
+
+
+
+## Run
+!! You have to add UWB tag your robot urdf 
+```
+export TURTLEBOT3_MODEL=burger
+roslaunch turtlebot3_gazebo turtlebot3_world.launch 
+
+export TURTLEBOT3_MODEL=burger
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch 
+
+roslaunch pozyx_simulation uwb_anchors_set.launch 
+
+rosrun pozyx_simulation uwb_simulation.py 
+
+rosrun advoard_localization kalman_filter_localization.py 
+```
